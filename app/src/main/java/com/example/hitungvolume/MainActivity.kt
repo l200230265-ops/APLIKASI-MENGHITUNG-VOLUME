@@ -12,6 +12,8 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.hitungvolume.ui.theme.HitungVolumeTheme
+import androidx.compose.ui.graphics.Color
+import androidx.compose.foundation.background
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,73 +41,83 @@ fun VolumeApp() {
     var tinggiKerucut by remember { mutableStateOf("") }
     var hasilKerucut by remember { mutableStateOf("") }
 
-    Column(
+    Box(
         modifier = Modifier
             .fillMaxSize()
-            .verticalScroll(rememberScrollState())
+            .background(Color(0xFFfaedcd))
             .padding(16.dp)
     ) {
 
-        Text(
-            text = "Aplikasi Hitung Volume",
-            style = MaterialTheme.typography.headlineMedium
-        )
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .statusBarsPadding()
+                .verticalScroll(rememberScrollState())
+        ) {
 
-        Spacer(modifier = Modifier.height(16.dp))
+            Text(
+                text = "📐 Hitung Volume",
+                style = MaterialTheme.typography.headlineLarge
+            )
 
-        //KUBUS
+            Spacer(modifier = Modifier.height(24.dp))
 
-        Card(modifier = Modifier.fillMaxWidth()) {
-            Column(modifier = Modifier.padding(16.dp)) {
-
-                Text("Volume Kubus", style = MaterialTheme.typography.titleLarge)
-
-                Spacer(modifier = Modifier.height(8.dp))
-
+            FancyCard(
+                title = "Kubus",
+                color = Color(0xFFccd5ae),
+                result = hasilKubus,
+                onClick = {
+                    val s = sisi.toDoubleOrNull()
+                    hasilKubus  = if (s != null && s > 0) {
+                        "Volume = %.2f".format(s * s * s)
+                    } else {
+                        "Masukkan angka lebih dari 0"
+                    }
+                }
+            ) {
                 OutlinedTextField(
                     value = sisi,
                     onValueChange = { sisi = it },
-                    label = { Text("Masukkan Sisi") },
-                    modifier = Modifier.fillMaxWidth()
+                    label = { Text("Sisi") },
+                    modifier = Modifier.fillMaxWidth(),
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedContainerColor = Color(0xFFfefae0),
+                        unfocusedContainerColor = Color(0xFFfefae0),
+                        focusedBorderColor = Color.White,
+                        unfocusedBorderColor = Color.Gray,
+                        focusedLabelColor = Color.White
+                    )
                 )
-
-                Spacer(modifier = Modifier.height(8.dp))
-
-                Button(
-                    onClick = {
-                        val s = sisi.toDoubleOrNull()
-                        if (s != null) {
-                            hasilKubus = "Volume: ${s * s * s}"
-                        } else {
-                            hasilKubus = "Masukkan angka yang valid"
-                        }
-                    },
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    Text("Hitung")
-                }
-
-                Spacer(modifier = Modifier.height(8.dp))
-                Text(hasilKubus)
             }
-        }
 
-        Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(20.dp))
 
-        //TABUNG
-
-        Card(modifier = Modifier.fillMaxWidth()) {
-            Column(modifier = Modifier.padding(16.dp)) {
-
-                Text("Volume Tabung", style = MaterialTheme.typography.titleLarge)
-
-                Spacer(modifier = Modifier.height(8.dp))
-
+            FancyCard(
+                title = "Tabung",
+                color = Color(0xFFccd5ae),
+                result = hasilTabung,
+                onClick = {
+                    val r = jariTabung.toDoubleOrNull()
+                    val t = tinggiTabung.toDoubleOrNull()
+                    hasilTabung = if (r != null && t != null && r > 0 && t > 0) {
+                        "Volume = %.2f".format(3.14 * r * r * t)
+                    } else {
+                        "Masukkan angka lebih dari 0"
+                    }
+                }
+            ) {
                 OutlinedTextField(
                     value = jariTabung,
                     onValueChange = { jariTabung = it },
                     label = { Text("Jari-jari") },
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth(),
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedContainerColor = Color(0xFFfefae0),
+                        unfocusedContainerColor = Color(0xFFfefae0),
+                        focusedBorderColor = Color.White,
+                        unfocusedBorderColor = Color.Gray,
+                        focusedLabelColor = Color.White
+                    )
                 )
 
                 Spacer(modifier = Modifier.height(8.dp))
@@ -114,47 +126,45 @@ fun VolumeApp() {
                     value = tinggiTabung,
                     onValueChange = { tinggiTabung = it },
                     label = { Text("Tinggi") },
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth(),
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedContainerColor = Color(0xFFfefae0),
+                        unfocusedContainerColor = Color(0xFFfefae0),
+                        focusedBorderColor = Color.White,
+                        unfocusedBorderColor = Color.Gray,
+                        focusedLabelColor = Color.White
+                    )
                 )
-
-                Spacer(modifier = Modifier.height(8.dp))
-
-                Button(
-                    onClick = {
-                        val r = jariTabung.toDoubleOrNull()
-                        val t = tinggiTabung.toDoubleOrNull()
-                        if (r != null && t != null) {
-                            hasilTabung = "Volume: ${3.14 * r * r * t}"
-                        } else {
-                            hasilTabung = "Masukkan angka yang valid"
-                        }
-                    },
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    Text("Hitung")
-                }
-
-                Spacer(modifier = Modifier.height(8.dp))
-                Text(hasilTabung)
             }
-        }
 
-        Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(20.dp))
 
-        //KERUCUT
-
-        Card(modifier = Modifier.fillMaxWidth()) {
-            Column(modifier = Modifier.padding(16.dp)) {
-
-                Text("Volume Kerucut", style = MaterialTheme.typography.titleLarge)
-
-                Spacer(modifier = Modifier.height(8.dp))
-
+            FancyCard(
+                title = "Kerucut",
+                color = Color(0xFFccd5ae),
+                result = hasilKerucut,
+                onClick = {
+                    val r = jariKerucut.toDoubleOrNull()
+                    val t = tinggiKerucut.toDoubleOrNull()
+                    hasilKerucut = if (r != null && t != null && r > 0 && t > 0) {
+                        "Volume = %.2f".format((1.0 / 3.0) * 3.14 * r * r * t)
+                    } else {
+                        "Masukkan angka lebih dari 0"
+                    }
+                }
+            ) {
                 OutlinedTextField(
                     value = jariKerucut,
                     onValueChange = { jariKerucut = it },
                     label = { Text("Jari-jari") },
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth(),
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedContainerColor = Color(0xFFfefae0),
+                        unfocusedContainerColor = Color(0xFFfefae0),
+                        focusedBorderColor = Color.White,
+                        unfocusedBorderColor = Color.Gray,
+                        focusedLabelColor = Color.White
+                    )
                 )
 
                 Spacer(modifier = Modifier.height(8.dp))
@@ -163,28 +173,60 @@ fun VolumeApp() {
                     value = tinggiKerucut,
                     onValueChange = { tinggiKerucut = it },
                     label = { Text("Tinggi") },
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth(),
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedContainerColor = Color(0xFFfefae0),
+                        unfocusedContainerColor = Color(0xFFfefae0),
+                        focusedBorderColor = Color.White,
+                        unfocusedBorderColor = Color.Gray,
+                        focusedLabelColor = Color.White
+                    )
                 )
+            }
+        }
+    }
+}
 
-                Spacer(modifier = Modifier.height(8.dp))
+@Composable
+fun FancyCard(
+    title: String,
+    color: Color,
+    result: String,
+    onClick: () -> Unit,
+    content: @Composable ColumnScope.() -> Unit
+) {
+    Card(
+        colors = CardDefaults.cardColors(containerColor = color),
+        elevation = CardDefaults.cardElevation(defaultElevation = 10.dp),
+        modifier = Modifier.fillMaxWidth()
+    ) {
+        Column(modifier = Modifier.padding(16.dp)) {
 
-                Button(
-                    onClick = {
-                        val r = jariKerucut.toDoubleOrNull()
-                        val t = tinggiKerucut.toDoubleOrNull()
-                        if (r != null && t != null) {
-                            hasilKerucut = "Volume: ${(1.0 / 3.0) * 3.14 * r * r * t}"
-                        } else {
-                            hasilKerucut = "Masukkan angka yang valid"
-                        }
-                    },
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    Text("Hitung")
-                }
+            Text(
+                text = title,
+                style = MaterialTheme.typography.titleLarge
+            )
 
-                Spacer(modifier = Modifier.height(8.dp))
-                Text(hasilKerucut)
+            Spacer(modifier = Modifier.height(12.dp))
+
+            content()
+
+            Spacer(modifier = Modifier.height(12.dp))
+
+            Button(
+                onClick = onClick,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text("Hitung")
+            }
+
+            Spacer(modifier = Modifier.height(12.dp))
+
+            if (result.isNotEmpty()) {
+                Text(
+                    text = result,
+                    style = MaterialTheme.typography.bodyLarge
+                )
             }
         }
     }
