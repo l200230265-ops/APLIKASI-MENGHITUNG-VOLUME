@@ -37,14 +37,13 @@ fun VolumeApp() {
     var tinggiTabung by remember { mutableStateOf("") }
     var hasilTabung by remember { mutableStateOf("") }
 
-    var jariKerucut by remember { mutableStateOf("") }
-    var tinggiKerucut by remember { mutableStateOf("") }
-    var hasilKerucut by remember { mutableStateOf("") }
+    var jarijari by remember { mutableStateOf("") }
+    var hasilBola by remember { mutableStateOf("") }
 
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color(0xFFfaedcd))
+            .background(Color(0xFFA2CB8B))
             .padding(16.dp)
     ) {
 
@@ -64,7 +63,7 @@ fun VolumeApp() {
 
             FancyCard(
                 title = "Kubus",
-                color = Color(0xFFccd5ae),
+                color = Color(0xFFE8F5BD),
                 result = hasilKubus,
                 onClick = {
                     val s = sisi.toDoubleOrNull()
@@ -81,8 +80,8 @@ fun VolumeApp() {
                     label = { Text("Sisi") },
                     modifier = Modifier.fillMaxWidth(),
                     colors = OutlinedTextFieldDefaults.colors(
-                        focusedContainerColor = Color(0xFFfefae0),
-                        unfocusedContainerColor = Color(0xFFfefae0),
+                        focusedContainerColor = Color(0xFFC7EABB),
+                        unfocusedContainerColor = Color(0xFFC7EABB),
                         focusedBorderColor = Color.White,
                         unfocusedBorderColor = Color.Gray,
                         focusedLabelColor = Color.White
@@ -94,7 +93,7 @@ fun VolumeApp() {
 
             FancyCard(
                 title = "Tabung",
-                color = Color(0xFFccd5ae),
+                color = Color(0xFFE8F5BD),
                 result = hasilTabung,
                 onClick = {
                     val r = jariTabung.toDoubleOrNull()
@@ -112,8 +111,8 @@ fun VolumeApp() {
                     label = { Text("Jari-jari") },
                     modifier = Modifier.fillMaxWidth(),
                     colors = OutlinedTextFieldDefaults.colors(
-                        focusedContainerColor = Color(0xFFfefae0),
-                        unfocusedContainerColor = Color(0xFFfefae0),
+                        focusedContainerColor = Color(0xFFC7EABB),
+                        unfocusedContainerColor = Color(0xFFC7EABB),
                         focusedBorderColor = Color.White,
                         unfocusedBorderColor = Color.Gray,
                         focusedLabelColor = Color.White
@@ -128,8 +127,8 @@ fun VolumeApp() {
                     label = { Text("Tinggi") },
                     modifier = Modifier.fillMaxWidth(),
                     colors = OutlinedTextFieldDefaults.colors(
-                        focusedContainerColor = Color(0xFFfefae0),
-                        unfocusedContainerColor = Color(0xFFfefae0),
+                        focusedContainerColor = Color(0xFFC7EABB),
+                        unfocusedContainerColor = Color(0xFFC7EABB),
                         focusedBorderColor = Color.White,
                         unfocusedBorderColor = Color.Gray,
                         focusedLabelColor = Color.White
@@ -137,46 +136,30 @@ fun VolumeApp() {
                 )
             }
 
-            Spacer(modifier = Modifier.height(20.dp))
+            Spacer(modifier = Modifier.height(24.dp))
 
             FancyCard(
-                title = "Kerucut",
-                color = Color(0xFFccd5ae),
-                result = hasilKerucut,
+                title = "Bola",
+                color = Color(0xFFE8F5BD),
+                result = hasilBola,
                 onClick = {
-                    val r = jariKerucut.toDoubleOrNull()
-                    val t = tinggiKerucut.toDoubleOrNull()
-                    hasilKerucut = if (r != null && t != null && r > 0 && t > 0) {
-                        "Volume = %.2f".format((1.0 / 3.0) * 3.14 * r * r * t)
+                    val r = jarijari.toDoubleOrNull()
+                    hasilBola = if (r != null && r > 0) {
+                        val volume = (4.0 / 3.0) * Math.PI * r * r * r
+                        "Volume = %.2f".format(volume)
                     } else {
                         "Masukkan angka lebih dari 0"
                     }
                 }
             ) {
                 OutlinedTextField(
-                    value = jariKerucut,
-                    onValueChange = { jariKerucut = it },
+                    value = jarijari,
+                    onValueChange = { jarijari = it },
                     label = { Text("Jari-jari") },
                     modifier = Modifier.fillMaxWidth(),
                     colors = OutlinedTextFieldDefaults.colors(
-                        focusedContainerColor = Color(0xFFfefae0),
-                        unfocusedContainerColor = Color(0xFFfefae0),
-                        focusedBorderColor = Color.White,
-                        unfocusedBorderColor = Color.Gray,
-                        focusedLabelColor = Color.White
-                    )
-                )
-
-                Spacer(modifier = Modifier.height(8.dp))
-
-                OutlinedTextField(
-                    value = tinggiKerucut,
-                    onValueChange = { tinggiKerucut = it },
-                    label = { Text("Tinggi") },
-                    modifier = Modifier.fillMaxWidth(),
-                    colors = OutlinedTextFieldDefaults.colors(
-                        focusedContainerColor = Color(0xFFfefae0),
-                        unfocusedContainerColor = Color(0xFFfefae0),
+                        focusedContainerColor = Color(0xFFC7EABB),
+                        unfocusedContainerColor = Color(0xFFC7EABB),
                         focusedBorderColor = Color.White,
                         unfocusedBorderColor = Color.Gray,
                         focusedLabelColor = Color.White
